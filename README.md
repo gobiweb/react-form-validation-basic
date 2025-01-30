@@ -1,9 +1,6 @@
-Here's a professional, well-structured README.md for your GitHub repository (with proper formatting and emojis to make it engaging):
-
-```markdown
 # React Form Validation with Zod + TypeScript 🔒✨
 
-![Form Preview](/public/react-hook-form.PNG)
+![Form Preview](public/react-hook-form.PNG)
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge&logo=vercel)](https://react-form-validation-basic.vercel.app/)
 
@@ -33,19 +30,19 @@ A modern form validation implementation using React, TypeScript, and Zod, demons
 
 ## Installation ⚙️
 
-1. **Clone the repository**
+### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/your-username/react-form-validation.git
 ```
 
-2. **Install dependencies**
+### 2️⃣ Install dependencies
 ```bash
 npm install
 # or
-yarn
+yarn install
 ```
 
-3. **Run the development server**
+### 3️⃣ Run the development server
 ```bash
 npm run dev
 # or
@@ -54,7 +51,7 @@ yarn dev
 
 ## Tech Stack 🛠️
 
-- **React** 18+ - UI library
+- **React 18+** - UI library
 - **TypeScript** - Static typing
 - **Zod** - Schema validation
 - **React Hook Form** - Form state management
@@ -65,25 +62,51 @@ yarn dev
 ### Schema Validation (Zod)
 ```typescript
 // schema.ts
+import { z } from "zod";
+
 export const formSchema = z.object({
   email: z.string().email("Invalid email format"),
   age: z.number().min(18, "Must be at least 18").max(70, "Cannot exceed 70"),
-  // ... other fields
-}).refine(data => data.password === data.confirmPassword, {
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords must match",
-  path: ["confirmPassword"]
+  path: ["confirmPassword"],
 });
 ```
 
 ### Form Component
 ```tsx
 // App.tsx
-const { register, handleSubmit, formState } = useForm<FormData>({
-  resolver: zodResolver(formSchema)
-});
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { formSchema } from "./schema";
 
-// Error display example
-{errors.email && <span className="error">{errors.email.message}</span>}
+const App = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(formSchema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <input {...register("email")} placeholder="Email" />
+      {errors.email && <span className="error">{errors.email.message}</span>}
+
+      <input {...register("age")} type="number" placeholder="Age" />
+      {errors.age && <span className="error">{errors.age.message}</span>}
+
+      <input {...register("password")} type="password" placeholder="Password" />
+      {errors.password && <span className="error">{errors.password.message}</span>}
+
+      <input {...register("confirmPassword")} type="password" placeholder="Confirm Password" />
+      {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default App;
 ```
 
 ## Why This Matters 💡
@@ -93,3 +116,8 @@ This implementation demonstrates:
 - **Reusable validation logic** through schema separation
 - **Clean error handling** with React Hook Form integration
 - **Production-ready patterns** for complex form scenarios
+
+---
+
+✅ **Feel free to contribute!** If you have improvements or suggestions, open an issue or create a PR. 🚀
+
