@@ -1,6 +1,6 @@
 # React Form Validation with Zod + TypeScript 🔒✨
 
-![Form Preview](public/react-hook-form.PNG)
+![Form Preview](public/project-preview.png)
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge&logo=vercel)](https://react-form-validation-basic.vercel.app/)
 
@@ -120,4 +120,3 @@ This implementation demonstrates:
 ---
 
 ✅ **Feel free to contribute!** If you have improvements or suggestions, open an issue or create a PR. 🚀
-
